@@ -31,7 +31,7 @@ public Space() {
     hero = new Hero(600, 480, Color.MAGENTA, 20, "Hero");
     enemy = new Enemy(500, 500, Color.RED, 20, "Enemy");
     timer = new Timer();
-    timer.scheduleAtFixedRate(new ScheduleTask(), 100, 100);
+    timer.scheduleAtFixedRate(new ScheduleTask(), 100, 50);
     
 }
     
@@ -52,6 +52,8 @@ public Space() {
     
         @Override
         public void run() {
+            wallCollisions(hero);
+            wallCollisions(enemy);
             hero.update();
             enemy.update();
             repaint();
@@ -60,16 +62,16 @@ public Space() {
     
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            hero.setDX(1);
+            hero.setDX(2);
         }
         else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            hero.setDX(-1);
+            hero.setDX(-2);
         }
         else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            hero.setDY(-1);
+            hero.setDY(-2);
         }
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            hero.setDY(1);
+            hero.setDY(2);
         }
     } 
     
@@ -83,8 +85,7 @@ public Space() {
         if (e.getKeyCode() == KeyEvent.VK_DOWN) 
             hero.setDY(0);   
     }
-        
-    
+           
     private void drawStars(Graphics g) {
         int x = 0;
         int y = 0;
@@ -102,6 +103,20 @@ public Space() {
           //if ( x > 1100 || y > 860) {
            //  break;
           //}
+        }
+    }
+    
+    /**
+     * Makes the hero and enemy bounce off walls
+     */
+    private void wallCollisions(Character c) {
+        //walls = this.getWidth(), this.getLength(), 0
+        //where the hero is = hero.getX(), hero.getY()
+        if (c.getX() <= 0 || c.getX() + 20 >= this.getWidth() ) {
+            c.reverseX();
+        }
+        if (c.getY() <= 0 || c.getY() + 20 >= this.getHeight() ) {
+            c.reverseY();
         }
     }
 }

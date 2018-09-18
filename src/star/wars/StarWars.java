@@ -30,6 +30,10 @@ public class StarWars {
             public void keyPressed(KeyEvent e) {
                 c.keyPressed(e);
             }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                c.keyReleased(e);
+            }
         });
     }
     
